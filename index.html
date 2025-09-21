@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agent-Avana - Legal Contracts Platform</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'primary': '#4f46e5',
+                        'secondary': '#6366f1',
+                        'accent': '#a5b4fc',
+                        'dark-bg': '#1f2937',
+                        'dark-card': '#2f3b4d'
+                    },
+                    borderRadius: {
+                        '4xl': '2rem',
+                    },
+                    boxShadow: {
+                        '3xl': '0 35px 60px -15px rgba(0, 0, 0, 0.3)',
+                    },
+                    fontFamily: {
+                        'sans': ['Inter', 'ui-sans-serif', 'system-ui', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'Helvetica Neue', 'Arial', 'Noto Sans', 'sans-serif', 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style type="text/tailwindcss">
+        @layer base {
+            body {
+                @apply bg-gray-100 text-gray-800 dark:bg-dark-bg dark:text-gray-200 font-sans;
+            }
+        }
+        .dashboard-card {
+            @apply bg-white dark:bg-dark-card rounded-2xl shadow-lg p-6 flex flex-col items-start transition-all duration-300 transform hover:scale-105 hover:shadow-2xl cursor-pointer;
+        }
+        .step-item {
+            @apply flex items-center mb-4 transition-all duration-300;
+        }
+        .step-icon {
+            @apply w-8 h-8 rounded-full flex items-center justify-center mr-3 text-white;
+        }
+        .status-badge {
+            @apply ml-2 text-xs font-semibold px-2 py-1 rounded-full;
+        }
+        @keyframes marquee {
+            0% { transform: translateY(0); }
+            100% { transform: translateY(-100%); }
+        }
+        .animate-marquee {
+            animation: marquee 10s linear infinite;
+        }
+    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+</head>
+<body class="flex min-h-screen">
+    <aside id="sidebar" class="bg-gray-900 text-white w-20 hover:w-64 transition-all duration-300 ease-in-out fixed inset-y-0 left-0 z-50 overflow-hidden group">
+        <div class="flex items-center justify-center h-20 border-b border-gray-700">
+            <div class="flex-shrink-0">
+                <span class="text-3xl font-bold">A</span>
+                <span class="opacity-0 group-hover:opacity-100 transition-opacity duration-300 text-sm ml-2">Agent-Avana</span>
+            </div>
+        </div>
+        <nav class="mt-8">
+            <a href="#" class="flex items-center p-4 text-gray-400 hover:bg-gray-700 hover:text-white transition-colors duration-200 rounded-lg">
+                <svg class="w-6 h-6 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z"></path></svg>
+                <span class="ml-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300 whitespace-nowrap">Dashboard</span>
+            </a>
+            <a href="#" class="flex items-center p-4 text-gray-400 hover:bg-gray-700 hover:text-white transition-colors duration-200 rounded-lg">
+                <svg class="w-6 h-6 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path d="M9 2a1 1 0 000 2h2a1 1 0 100-2H9z"></path><path fill-rule="evenodd" d="M4 5a2 2 0 012-2h2V1a1 1 0 012 0v2h2a2 2 0 012 2v12a2 2 0 01-2 2H6a2 2 0 01-2-2V5zm3 0h6v12H7V5zm1 3a1 1 0 000 2h4a1 1 0 100-2H8z" clip-rule="evenodd"></path></svg>
+                <span class="ml-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300 whitespace-nowrap">Contracts</span>
+            </a>
+            <a href="#" class="flex items-center p-4 text-gray-400 hover:bg-gray-700 hover:text-white transition-colors duration-200 rounded-lg">
+                <svg class="w-6 h-6 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path d="M10 2a6 6 0 00-6 6v3.586l-.707.707A1 1 0 004 14h12a1 1 0 00.707-1.707L16 11.586V8a6 6 0 00-6-6zM10 18a3 3 0 01-3-3h6a3 3 0 01-3 3z"></path></svg>
+                <span class="ml-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300 whitespace-nowrap">Notifications</span>
+            </a>
+            <a href="#" class="flex items-center p-4 text-gray-400 hover:bg-gray-700 hover:text-white transition-colors duration-200 rounded-lg">
+                <svg class="w-6 h-6 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M11.49 3.17c-.38-.21-.78-.381-1.2-.511A9.95 9.95 0 0010 2C7.304 2 4.802 3.294 3.293 5.293a1 1 0 001.414 1.414L5 6.414a7.979 7.979 0 015-.714 7.96 7.96 0 014.28 1.171 1 1 0 001.415-1.414A9.957 9.957 0 0010 2zM4.293 14.293a1 1 0 000 1.414A9.957 9.957 0 0010 18c2.696 0 5.198-1.294 6.707-3.293a1 1 0 00-1.414-1.414L15 13.586a7.979 7.979 0 01-5 .714 7.96 7.96 0 01-4.28-1.171 1 1 0 00-1.415 1.414z" clip-rule="evenodd"></path></svg>
+                <span class="ml-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300 whitespace-nowrap">Settings</span>
+            </a>
+        </nav>
+    </aside>
+
+    <main class="flex-1 transition-all duration-300 p-8 ml-20 md:ml-20 lg:ml-20 xl:ml-20">
+        <header class="flex justify-between items-center py-4 mb-8 sticky top-0 z-40 bg-gray-100 dark:bg-dark-bg">
+            <h1 class="text-3xl font-bold">Dashboard</h1>
+            <div class="flex items-center space-x-4">
+                <div class="relative">
+                    <input type="text" placeholder="Search..." class="bg-white dark:bg-gray-800 rounded-full px-4 py-2 w-64 focus:outline-none focus:ring-2 focus:ring-primary">
+                    <svg class="absolute right-3 top-3 w-4 h-4 text-gray-500" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clip-rule="evenodd"></path></svg>
+                </div>
+                <button class="text-gray-500 hover:text-primary transition-colors duration-200">
+                    <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20"><path d="M10 2a6 6 0 00-6 6v3.586l-.707.707A1 1 0 004 14h12a1 1 0 00.707-1.707L16 11.586V8a6 6 0 00-6-6zM10 18a3 3 0 01-3-3h6a3 3 0 01-3 3z"></path></svg>
+                </button>
+                <img class="w-8 h-8 rounded-full cursor-pointer" src="https://ui-avatars.com/api/?name=JD" alt="User Avatar">
+            </div>
+        </header>
+
+        <section id="dashboard-content" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div onclick="showUploadModal()" class="dashboard-card bg-primary text-white hover:bg-secondary">
+                <h3 class="text-xl font-semibold mb-2">Upload Document</h3>
+                <p class="text-gray-200">Start the verification process by uploading a new vendor agreement, contract, or policy.</p>
+                <div class="mt-4 border-2 border-dashed border-white rounded-xl p-6 text-center w-full">
+                    <p class="text-lg font-bold mb-2">Drag & Drop Here</p>
+                    <p class="text-sm">or click to browse</p>
+                </div>
+            </div>
+
+            <div class="dashboard-card">
+                <h3 class="text-xl font-semibold mb-2">Pending Approvals</h3>
+                <p class="text-gray-500 dark:text-gray-400">You have <span class="text-red-500 font-bold">2</span> documents awaiting your approval.</p>
+                <ul class="mt-4 w-full">
+                    <li class="border-b dark:border-gray-700 py-2 flex justify-between items-center text-gray-600 dark:text-gray-300">
+                        <span>Vendor Agreement - ACME</span>
+                        <span class="text-sm text-red-500 font-semibold">2 days left</span>
+                    </li>
+                    <li class="border-b dark:border-gray-700 py-2 flex justify-between items-center text-gray-600 dark:text-gray-300">
+                        <span>Service Contract - XYZ</span>
+                        <span class="text-sm text-yellow-500 font-semibold">5 days left</span>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="dashboard-card col-span-1 lg:col-span-1">
+                <h3 class="text-xl font-semibold mb-2">Live Law Updates</h3>
+                <div class="h-24 w-full overflow-hidden">
+                    <div id="law-ticker" class="animate-marquee">
+                        <p class="py-1 text-sm text-gray-500 dark:text-gray-400">New GST rule effective 2025-09-22 may affect your Indian contracts.</p>
+                        <p class="py-1 text-sm text-gray-500 dark:text-gray-400">FDA has updated its Medical Device Standard IEC 62304.</p>
+                        <p class="py-1 text-sm text-gray-500 dark:text-gray-400">ISO 9001:2025 draft released. Verification recommended.</p>
+                        <p class="py-1 text-sm text-gray-500 dark:text-gray-400">New privacy regulations in Europe: GDPR 2.0 announced.</p>
+                        <p class="py-1 text-sm text-gray-500 dark:text-gray-400">Indian Contract Act Amendment 2026 passed.</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="dashboard-card col-span-1 md:col-span-2 lg:col-span-3">
+                <h3 class="text-xl font-semibold mb-4">Documents at a Glance</h3>
+                <div class="overflow-x-auto w-full">
+                    <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
+                        <thead>
+                            <tr>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Document Name</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Last Verified</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody class="bg-white dark:bg-dark-card divide-y divide-gray-200 dark:divide-gray-700">
+                            <tr class="hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors duration-200 cursor-pointer">
+                                <td class="px-6 py-4 whitespace-nowrap">Vendor Agreement - ACME</td>
+                                <td class="px-6 py-4 whitespace-nowrap"><span class="status-badge bg-red-500 text-white">Conflict</span></td>
+                                <td class="px-6 py-4 whitespace-nowrap">2025-09-20</td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <button onclick="viewDocument('doc-acme')" class="text-primary hover:underline">View</button>
+                                </td>
+                            </tr>
+                            <tr class="hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors duration-200 cursor-pointer">
+                                <td class="px-6 py-4 whitespace-nowrap">NDA - Project Falcon</td>
+                                <td class="px-6 py-4 whitespace-nowrap"><span class="status-badge bg-green-500 text-white">Compliant</span></td>
+                                <td class="px-6 py-4 whitespace-nowrap">2025-09-18</td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <button onclick="viewDocument('doc-falcon')" class="text-primary hover:underline">View</button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <section id="document-workspace" class="hidden">
+            <header class="flex justify-between items-center py-4 mb-8">
+                <h1 class="text-3xl font-bold" id="doc-title">Document Title</h1>
+                <button onclick="hideDocumentWorkspace()" class="bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-200 px-4 py-2 rounded-full hover:bg-gray-300 dark:hover:bg-gray-600 transition-colors duration-200">Back to Dashboard</button>
+            </header>
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                <div class="col-span-1 bg-white dark:bg-dark-card rounded-2xl shadow-lg p-6">
+                    <h3 class="text-xl font-bold mb-4">Policies & Standards</h3>
+                    <ul id="policy-list">
+                        </ul>
+                </div>
+
+                <div class="col-span-1 lg:col-span-2 bg-white dark:bg-dark-card rounded-2xl shadow-lg p-6">
+                    <h3 class="text-xl font-bold mb-4">Document Content</h3>
+                    <div id="document-content" class="relative text-lg leading-relaxed space-y-4">
+                        <p>This <span class="bg-green-300 dark:bg-green-700/50 p-1 rounded-md cursor-pointer" onmouseover="showClauseDetails('clause-1')" onmouseout="hideClauseDetails()">clause on non-disclosure is compliant</span> with standard confidentiality agreements.</p>
+                        <p>The <span class="bg-red-300 dark:bg-red-700/50 p-1 rounded-md cursor-pointer" onmouseover="showClauseDetails('clause-2')" onmouseout="hideClauseDetails()">auto-renewal clause requires 60 days' notice</span>, which conflicts with local consumer protection laws requiring a 30-day notice.</p>
+                        <p>This section discusses the <span class="bg-yellow-300 dark:bg-yellow-700/50 p-1 rounded-md cursor-pointer" onmouseover="showClauseDetails('clause-3')" onmouseout="hideClauseDetails()">jurisdiction for dispute resolution</span>. It is a valid clause but is recommended to be updated for clarity on specific arbitration rules.</p>
+                        <p>The intellectual property clause is well-defined and aligns with current best practices.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <div id="upload-modal" class="fixed inset-0 bg-gray-900 bg-opacity-75 flex items-center justify-center z-[100] hidden">
+        <div class="bg-white dark:bg-dark-card rounded-3xl shadow-3xl p-8 w-11/12 md:w-2/3 lg:w-1/2 relative">
+            <button onclick="hideUploadModal()" class="absolute top-4 right-4 text-gray-500 hover:text-gray-800 dark:hover:text-gray-200 transition-colors duration-200">
+                <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
+            </button>
+            <h2 class="text-2xl font-bold text-center mb-6">Document Verification Progress</h2>
+            <div id="upload-progress-container" class="space-y-4">
+                <div class="step-item text-gray-500" data-step="1">
+                    <span class="step-icon bg-gray-400">1</span>
+                    <span class="flex-1 font-medium">Document Ingested</span>
+                    <span id="step-1-status" class="status-badge bg-gray-400 text-white">Pending</span>
+                </div>
+                <div class="step-item text-gray-500" data-step="2">
+                    <span class="step-icon bg-gray-400">2</span>
+                    <span class="flex-1 font-medium">Authenticity Check</span>
+                    <span id="step-2-status" class="status-badge bg-gray-400 text-white">Pending</span>
+                </div>
+                <div class="step-item text-gray-500" data-step="3">
+                    <span class="step-icon bg-gray-400">3</span>
+                    <span class="flex-1 font-medium">Policy Mapping</span>
+                    <span id="step-3-status" class="status-badge bg-gray-400 text-white">Pending</span>
+                </div>
+                <div class="step-item text-gray-500" data-step="4">
+                    <span class="step-1 flex-1 font-medium">Final Verification</span>
+                    <span id="step-4-status" class="status-badge bg-gray-400 text-white">Pending</span>
+                </div>
+            </div>
+            <div class="text-center mt-6">
+                <button onclick="startVerification()" class="bg-primary text-white font-bold py-2 px-6 rounded-full hover:bg-secondary transition-colors duration-200">Start Verification</button>
+            </div>
+        </div>
+    </div>
+
+    <button onclick="toggleChatbot()" class="fixed bottom-6 right-6 z-50 bg-primary text-white p-4 rounded-full shadow-lg hover:scale-110 transition-transform duration-300">
+        <svg class="w-8 h-8" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2c5.523 0 10 4.477 10 10s-4.477 10-10 10a9.967 9.967 0 01-6.176-2.193L2 22l2.194-4.176A9.966 9.966 0 012 12C2 6.477 6.477 2 12 2zm1 14h-2v-2h2v2zm0-4h-2V7h2v5z"></path></svg>
+    </button>
+
+    <div id="chatbot-overlay" class="fixed inset-0 z-[100] bg-gray-900 bg-opacity-75 hidden">
+        <div id="chatbot-panel" class="fixed bottom-0 right-6 w-full max-w-sm h-3/4 max-h-[600px] bg-white dark:bg-dark-card rounded-t-3xl shadow-3xl flex flex-col transition-all duration-300 transform translate-y-full">
+            <div class="flex justify-between items-center p-4 border-b dark:border-gray-700">
+                <h3 class="text-xl font-bold">Agent-Avana AI Assistant</h3>
+                <div class="flex space-x-2">
+                    <button onclick="minimizeChatbot()" class="p-2 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-full">
+                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M18 12H6a1 1 0 010-2h12a1 1 0 010 2z"></path></svg>
+                    </button>
+                    <button onclick="closeChatbot()" class="p-2 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-full">
+                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
+                    </button>
+                </div>
+            </div>
+            <div id="chatbot-messages" class="flex-1 p-4 overflow-y-auto">
+                <div class="bg-gray-200 dark:bg-gray-700 p-3 rounded-xl mb-2 text-sm max-w-xs">Hello! How can I assist you with your legal documents today?</div>
+            </div>
+            <div class="p-4 border-t dark:border-gray-700">
+                <div class="flex items-center space-x-2">
+                    <input type="text" id="chatbot-input" class="flex-1 p-3 rounded-full bg-gray-100 dark:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-primary" placeholder="Type your message...">
+                    <button id="send-button" class="p-3 bg-primary text-white rounded-full hover:bg-secondary">
+                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path d="M10.894 2.553a1 1 0 00-1.788 0l-7 14a1 1 0 00.95 1.423h14a1 1 0 00.95-1.423l-7-14z"></path></svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // JavaScript for Modal, Chatbot, and UI State Management
+
+        // UI State Variables
+        let isChatbotMinimized = false;
+        let isDocumentWorkspaceVisible = false;
+
+        // --- Core UI Functions ---
+
+        // Modal for Upload/Progress
+        function showUploadModal() {
+            document.getElementById('upload-modal').classList.remove('hidden');
+        }
+
+        function hideUploadModal() {
+            document.getElementById('upload-modal').classList.add('hidden');
+            // Reset the progress
+            const steps = document.querySelectorAll('.step-item');
+            steps.forEach(step => {
+                step.classList.add('text-gray-500');
+                step.classList.remove('text-green-500', 'text-red-500');
+                const statusBadge = step.querySelector('.status-badge');
+                statusBadge.textContent = 'Pending';
+                statusBadge.classList.remove('bg-green-500', 'bg-red-500');
+                statusBadge.classList.add('bg-gray-400');
+            });
+        }
+
+        function startVerification() {
+            // Simulate the backend verification process
+            const steps = [
+                { id: 'step-1-status', name: 'Ingested', success: true },
+                { id: 'step-2-status', name: 'Authenticity Check', success: true },
+                { id: 'step-3-status', name: 'Policy Mapping', success: false }, // Simulate a conflict
+                { id: 'step-4-status', name: 'Final Verification', success: false }
+            ];
+
+            let delay = 1000;
+            steps.forEach((step, index) => {
+                setTimeout(() => {
+                    const statusBadge = document.getElementById(step.id);
+                    const stepItem = statusBadge.closest('.step-item');
+                    
+                    if (step.success) {
+                        statusBadge.textContent = 'Done';
+                        statusBadge.classList.remove('bg-gray-400');
+                        statusBadge.classList.add('bg-green-500');
+                        stepItem.classList.remove('text-gray-500');
+                        stepItem.classList.add('text-green-500');
+                    } else {
+                        statusBadge.textContent = 'Conflict';
+                        statusBadge.classList.remove('bg-gray-400');
+                        statusBadge.classList.add('bg-red-500');
+                        stepItem.classList.remove('text-gray-500');
+                        stepItem.classList.add('text-red-500');
+                    }
+                    if (index === steps.length - 1) {
+                        // After final step, show a message or redirect
+                        console.log("Verification process complete.");
+                    }
+                }, delay * (index + 1));
+            });
+        }
+
+        // --- Chatbot Functions ---
+
+        function toggleChatbot() {
+            const chatbotOverlay = document.getElementById('chatbot-overlay');
+            const chatbotPanel = document.getElementById('chatbot-panel');
+            if (chatbotOverlay.classList.contains('hidden')) {
+                chatbotOverlay.classList.remove('hidden');
+                setTimeout(() => {
+                    chatbotPanel.classList.remove('translate-y-full');
+                    chatbotPanel.classList.add('translate-y-0');
+                }, 10);
+            } else {
+                closeChatbot();
+            }
+        }
+
+        function closeChatbot() {
+            const chatbotOverlay = document.getElementById('chatbot-overlay');
+            const chatbotPanel = document.getElementById('chatbot-panel');
+            chatbotPanel.classList.remove('translate-y-0');
+            chatbotPanel.classList.add('translate-y-full');
+            setTimeout(() => {
+                chatbotOverlay.classList.add('hidden');
+            }, 300);
+        }
+
+        function minimizeChatbot() {
+            closeChatbot(); // In this simple example, minimize and close are the same action
+        }
+
+        document.getElementById('send-button').addEventListener('click', sendMessage);
+        document.getElementById('chatbot-input').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                sendMessage();
+            }
+        });
+
+        function sendMessage() {
+            const input = document.getElementById('chatbot-input');
+            const message = input.value.trim();
+            if (message) {
+                addMessageToChat('user', message);
+                input.value = '';
+                // Simulate bot response
+                setTimeout(() => {
+                    addMessageToChat('bot', "I'm sorry, I can't process that request at this time. Please try a different query related to legal documents.");
+                }, 1000);
+            }
+        }
+
+        function addMessageToChat(sender, message) {
+            const messagesContainer = document.getElementById('chatbot-messages');
+            const messageElement = document.createElement('div');
+            messageElement.classList.add('p-3', 'rounded-xl', 'mb-2', 'text-sm');
+            if (sender === 'user') {
+                messageElement.classList.add('bg-primary', 'text-white', 'ml-auto', 'max-w-xs');
+            } else {
+                messageElement.classList.add('bg-gray-200', 'dark:bg-gray-700', 'max-w-xs');
+            }
+            messageElement.textContent = message;
+            messagesContainer.appendChild(messageElement);
+            messagesContainer.scrollTop = messagesContainer.scrollHeight;
+        }
+
+        // --- Document Workspace Functions ---
+
+        function viewDocument(docId) {
+            // This is a placeholder. In a real app, this would fetch document data.
+            const dashboard = document.getElementById('dashboard-content');
+            const workspace = document.getElementById('document-workspace');
+            const docTitle = document.getElementById('doc-title');
+
+            if (docId === 'doc-acme') {
+                docTitle.textContent = "Vendor Agreement - ACME";
+                populatePolicies(['FDA', 'IEC 62304', 'ISO 9001', 'ISO 13485', 'ISO 27001']);
+            } else if (docId === 'doc-falcon') {
+                docTitle.textContent = "NDA - Project Falcon";
+                populatePolicies(['ISO 27001', 'GDPR']);
+            }
+
+            dashboard.classList.add('hidden');
+            workspace.classList.remove('hidden');
+            isDocumentWorkspaceVisible = true;
+        }
+
+        function hideDocumentWorkspace() {
+            const dashboard = document.getElementById('dashboard-content');
+            const workspace = document.getElementById('document-workspace');
+            dashboard.classList.remove('hidden');
+            workspace.classList.add('hidden');
+            isDocumentWorkspaceVisible = false;
+        }
+
+        function populatePolicies(policies) {
+            const policyList = document.getElementById('policy-list');
+            policyList.innerHTML = '';
+            const policyData = {
+                'FDA': '❌ Not Satisfied',
+                'IEC 62304': '❌ Not Satisfied',
+                'ISO 9001': '✅ Satisfied',
+                'ISO 13485': '✅ Satisfied',
+                'ISO 27001': '✅ Satisfied',
+                'GDPR': '❌ Not Satisfied'
+            };
+
+            policies.forEach(policy => {
+                const status = policyData[policy];
+                const isSatisfied = status.includes('Satisfied');
+                const li = document.createElement('li');
+                li.innerHTML = `
+                    <div class="flex items-center justify-between py-2 border-b dark:border-gray-700">
+                        <span class="font-medium">${policy}</span>
+                        <span class="text-sm font-semibold ${isSatisfied ? 'text-green-500' : 'text-red-500'}">${status}</span>
+                        <button class="ml-2 text-sm text-primary hover:underline" onclick="togglePolicy(this, '${policy}')">Add/Remove</button>
+                    </div>
+                `;
+                policyList.appendChild(li);
+            });
+        }
+        
+        // This function would toggle a policy on/off
+        function togglePolicy(button, policyName) {
+            const statusSpan = button.previousElementSibling;
+            const isSatisfied = statusSpan.textContent.includes('Satisfied');
+            if (isSatisfied) {
+                if (confirm(`Are you sure you want to remove ${policyName}? This may affect compliance.`)) {
+                    statusSpan.textContent = '❌ Not Satisfied';
+                    statusSpan.classList.remove('text-green-500');
+                    statusSpan.classList.add('text-red-500');
+                }
+            } else {
+                statusSpan.textContent = '✅ Satisfied';
+                statusSpan.classList.remove('text-red-500');
+                statusSpan.classList.add('text-green-500');
+            }
+        }
+
+        // Clause details pop-up logic
+        function showClauseDetails(clauseId) {
+            const detailsPanel = document.getElementById('document-details-panel');
+            // This is a placeholder for a real panel.
+            console.log(`Showing details for ${clauseId}`);
+        }
+        function hideClauseDetails(clauseId) {
+            console.log(`Hiding details for ${clauseId}`);
+        }
+    </script>
+</body>
+</html>
